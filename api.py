@@ -1,4 +1,5 @@
 import json
+import signal
 from tornado.httpserver import HTTPServer
 from tornado.httputil import HTTPHeaders
 from  tornado.web import URLSpec
@@ -42,6 +43,12 @@ class OrderHandler(tornado.web.RequestHandler):
         self.write(json.dumps(fills))
 
 
+def stop():
+    tornado.ioloop.IOLoop.current().stop()
+
+def sigint_handler(signum, frame):
+    tornado.ioloop.IOLoop.current().add_callback(stop)
+
 def main():
     tornado.options.parse_command_line()
     application = tornado.web.Application([
@@ -51,6 +58,7 @@ def main():
     ])
     http_server = HTTPServer(application)
     http_server.listen(options.port)
+    signal.signal(signal.SIGINT, sigint_handler)
     tornado.ioloop.IOLoop.current().start()
 
 if __name__ == "__main__":
