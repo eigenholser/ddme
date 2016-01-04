@@ -2,7 +2,6 @@ import json
 from tornado.httpserver import HTTPServer
 from  tornado.web import URLSpec
 import tornado.ioloop
-#import tornado.options
 import tornado.web
 from tornado.options import define, options
 
