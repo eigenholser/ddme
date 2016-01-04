@@ -66,9 +66,9 @@ class TestBook(object):
         fills3 = Book().match(buy)
         orders = Book().orders()
         expected = {"sells": [{"qty": 1, "prc": 2}], "buys": [],}
-        assert fills1 == []
-        assert fills2 == []
-        assert fills3 == [{"qty": 1, "prc": 1,}]
+        assert fills1 == {"fills": []}
+        assert fills2 == {"fills": []}
+        assert fills3 == {"fills": [{"qty": 1, "prc": 1,}]}
         assert orders == expected
 
     def test_match_sell_against_partial_matching_buy(self):
@@ -85,9 +85,9 @@ class TestBook(object):
         orders = Book().orders()
         expected = {"sells": [], "buys": [{"qty": 1, "prc": 2},
                                           {"qty": 1, "prc": 1}],}
-        assert fills1 == []
-        assert fills2 == []
-        assert fills3 == [{"qty": 1, "prc": 2,}]
+        assert fills1 == {"fills": []}
+        assert fills2 == {"fills": []}
+        assert fills3 == {"fills": [{"qty": 1, "prc": 2,}]}
         assert orders == expected
 
     def test_match_sell_against_short_matching_buy(self):
@@ -104,9 +104,9 @@ class TestBook(object):
         orders = Book().orders()
         expected = {"sells": [{"qty": 1, "prc": 2},],
                     "buys": [{"qty": 1, "prc": 1},],}
-        assert fills1 == []
-        assert fills2 == []
-        assert fills3 == [{"qty": 1, "prc": 2,},]
+        assert fills1 == {"fills": []}
+        assert fills2 == {"fills": []}
+        assert fills3 == {"fills": [{"qty": 1, "prc": 2,},]}
         assert orders == expected
 
     def test_match_sell_against_partial_short_matching_buy(self):
@@ -125,10 +125,11 @@ class TestBook(object):
         orders = Book().orders()
         expected = {"sells": [],
                     "buys": [{"qty": 1, "prc": 1},],}
-        assert fills1 == []
-        assert fills2 == []
-        assert fills3 == []
-        assert fills4 == [{"qty": 1, "prc": 3}, {"qty": 1, "prc": 2,},]
+        assert fills1 == {"fills": []}
+        assert fills2 == {"fills": []}
+        assert fills3 == {"fills": []}
+        assert fills4 == {"fills":
+                [{"qty": 1, "prc": 3}, {"qty": 1, "prc": 2,},]}
         assert orders == expected
 
     def test_orders(self):
@@ -143,8 +144,8 @@ class TestBook(object):
         orders = Book().orders()
         expected = {"sells": [{"qty": 1, "prc": 3},],
                     "buys": [{"qty": 1, "prc": 2},],}
-        assert fills1 == []
-        assert fills2 == []
+        assert fills1 == {"fills": []}
+        assert fills2 == {"fills": []}
         assert orders == expected
 
 
