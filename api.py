@@ -1,11 +1,12 @@
 import json
 import signal
+import sys
+
 from tornado.httpserver import HTTPServer
 from tornado.httputil import HTTPHeaders
-from  tornado.web import URLSpec
 import tornado.ioloop
-import tornado.web
 from tornado.options import define, options
+from  tornado.web import URLSpec
 
 from orders import Book, Buy, Sell
 
@@ -46,9 +47,15 @@ class OrderHandler(tornado.web.RequestHandler):
 
 
 def stop():
+    """
+    Stop the IOLoop.
+    """
     tornado.ioloop.IOLoop.current().stop()
 
 def sigint_handler(signum, frame):
+    """
+    Add shutdown task in next IOLoop.
+    """
     tornado.ioloop.IOLoop.current().add_callback(stop)
 
 def main():
@@ -62,6 +69,7 @@ def main():
     http_server.listen(options.port)
     signal.signal(signal.SIGINT, sigint_handler)
     tornado.ioloop.IOLoop.current().start()
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
