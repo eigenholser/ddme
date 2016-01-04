@@ -12,7 +12,6 @@ from orders import Book, Buy, Sell
 import constants
 
 define("port", default=3000, help="run on the given port", type=int)
-Book()
 
 
 class BookHandler(tornado.web.RequestHandler):
