@@ -32,6 +32,8 @@ Or, if you want to run it on a different port::
 
     $ python api.py --port=4321
 
+Hit ``ctrl-c`` to cleanly exit the server.
+
 The validation tests are in the file ``test.sh``. The ``curl`` commands default
 to port 3000. To validate, just invoke it on the command line::
 
