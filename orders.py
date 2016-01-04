@@ -94,7 +94,7 @@ class Book(Singleton):
 
         if order.qty > 0:
             self.post(order)
-        return fills
+        return {"fills": fills}
 
     def post(self, order):
         side = None
