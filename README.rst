@@ -60,7 +60,7 @@ Notes
   implementation. A scalable approach would certainly employ a different
   strategy.
 * Return JSON response with fills. This was not specified in the spec but was
-  helpful in development and, I would think, relevant information.
+  helpful in development and, I think, relevant information.
 * REST API implemented as specified. Normal pattern would have ``/buys`` and
   ``/sells`` representing collections when called with ``GET``. ``POST`` to
   the collections would create the object with response including a
