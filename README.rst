@@ -41,6 +41,18 @@ Or if you've run the server on a different port::
 
     $ ./test.sh 4321
 
+----------
+Unit Tests
+----------
+
+There are unit tests implemented with PyTest. Code coverage will be generated
+using Coverage. Run the tests like this::
+
+    $ pytest_with_coverage.sh
+
+This will generate a code coverage report in the ``htmlcov/`` directory.
+
+-----
 Notes
 -----
 
@@ -49,3 +61,9 @@ Notes
   strategy.
 * Return JSON response with fills. This was not specified in the spec but was
   helpful in development and, I would think, relevant information.
+* REST API implemented as specified. Normal pattern would have ``/buys`` and
+  ``/sells`` representing collections when called with ``GET``. ``POST`` to
+  the collections would create the object with response including a
+  ``Location:`` HTTP header. Though I can see that in this implementation how
+  that would complicate the matching engine.
+

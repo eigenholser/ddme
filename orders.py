@@ -26,6 +26,12 @@ class Book(Singleton):
         self.buys = []
         self.sells = []
 
+    def _clear(self):
+        """
+        Supports unit tests only.
+        """
+        self.__init__()
+
     def _ismatch(self, order, entry):
         """
         Conditional boolean value depending on which side of order book.
@@ -130,33 +136,33 @@ class Order(object):
         else:
             raise Exception("Short of shares to fill.")
 
-    def __ge__(self, other):
+    def __ge__(self, other): # pragma: no cover
         return self.prc >= other.prc
 
-    def __str__(self):
+    def __str__(self): # pragma: no cover
         ret = {"qty": self.qty, "prc": self.prc}
         return json.dumps(ret)
 
-    def __unicode__(self):
+    def __unicode__(self): # pragma: no cover
         return str(self)
 
-    def __repr__(self):
+    def __repr__(self): # pragma: no cover
         return str(self)
 
-    def dict(self):
+    def dict(self): # pragma: no cover
         return {"prc": self.prc, "qty": self.qty}
 
-    def complete(self):
+    def complete(self): # pragma: no cover
         self.qty = 0
 
-    def update(self, **remainder):
+    def update(self, **remainder): # pragma: no cover
         self.qty = remainder['qty']
 
 
-class Buy(Order):
+class Buy(Order): # pragma: no cover
     pass
 
 
-class Sell(Order):
+class Sell(Order): # pragma: no cover
     pass
 
