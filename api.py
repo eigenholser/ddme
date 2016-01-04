@@ -34,12 +34,17 @@ class OrderHandler(tornado.web.RequestHandler):
             order = Buy(**body)
         if self.request.uri == "/sell":
             order = Sell(**body)
-        fills = Book().match(order)
+        try:
+            fills = Book().match(order)
+            http_status_code = 201
+        except:
+            http_status_code = 500
         # TODO: Would prefer to handle the headers more cleverly like with
         # a decorator.
         self.set_header("content-type", "application/json")
         self.set_header("location", "{}://{}{}".format(self.request.protocol,
             self.request.host, self.reverse_url("book")))
+        self.set_status(http_status_code)
         self.write(json.dumps(fills))
 
 
