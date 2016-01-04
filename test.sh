@@ -59,3 +59,4 @@ echo
 echo "***"
 curl --silent localhost:$port/book $verbose | json_reformat
 echo
+
