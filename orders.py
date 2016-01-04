@@ -125,7 +125,7 @@ class Order(object):
     Base class for order objects.
     """
 
-    def __init__(self, qty=0, prc=0):
+    def __init__(self, qty=0, prc=0): # pragma: no cover
         self.qty = qty
         self.prc = prc
 
