@@ -3,7 +3,7 @@ Dumbed Down Matching Engine
 ===========================
 
 Implements a simple order matching engine. The server is implemented using
-``tornado``.
+``tornado``. This implementation uses Python 2.
 
 ------------
 Installation
