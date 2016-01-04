@@ -67,4 +67,5 @@ Notes
   ``Location`` HTTP header. Though I can see that in this implementation how
   that would complicate the matching engine. As a compromise, I added a
   ``Location`` header for the ``/book`` API endpoint.
-
+* There are no integration tests. Generally I am not a fan. In this
+  implementation manual testing is sufficient.
