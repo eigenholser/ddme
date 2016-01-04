@@ -158,6 +158,14 @@ class Order(object):
     def update(self, **remainder): # pragma: no cover
         self.qty = remainder['qty']
 
+    def is_valid(self):
+        """
+        Simple validity check.
+        """
+        if self.qty == 0 or self.prc == 0:
+            return False
+        return True
+
 
 class Buy(Order): # pragma: no cover
     pass

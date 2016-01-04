@@ -30,11 +30,17 @@ class OrderHandler(tornado.web.RequestHandler):
     """
     def post(self, **kwargs):
         order = None
+        resp = None
         body = json.loads(self.request.body)
         if self.request.uri == "{}".format(constants.URL_PATH_BUY):
             order = Buy(**body)
         if self.request.uri == "{}".format(constants.URL_PATH_SELL):
             order = Sell(**body)
+        if not order.is_valid():
+            resp = {"message": "Invalid request"}
+            self.set_status(constants.HTTP_400_BAD_REQUEST)
+            self.write(resp)
+            return
         try:
             resp = Book().match(order)
             http_status_code = constants.HTTP_201_CREATED
