@@ -1,6 +1,6 @@
 #!/bin/sh
 
-port=$port
+port=$1
 if [ -z $port ]; then
     port=3000
 fi
