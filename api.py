@@ -12,9 +12,9 @@ from orders import Book, Buy, Sell
 import constants
 
 try:
-    from httplib import responses
+    from httplib import responses   # py2
 except ImportError:
-    from http.client import responses
+    from http.client import responses   # py3
 
 define("port", default=3000, help="run on the given port", type=int)
 
