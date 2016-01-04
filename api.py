@@ -8,6 +8,7 @@ import tornado.web
 from tornado.options import define, options
 
 from orders import Book, Buy, Sell
+from decorators import json_output
 
 define("port", default=3000, help="run on the given port", type=int)
 Book()
@@ -18,8 +19,7 @@ class BookHandler(tornado.web.RequestHandler):
     Handle GET requests to /book API endpoint.
     """
     def get(self):
-        self.set_header("content-type", "application/json")
-        ret = json.dumps(Book().orders())
+        ret = Book().orders()
         self.write(ret)
 
 
@@ -35,17 +35,15 @@ class OrderHandler(tornado.web.RequestHandler):
         if self.request.uri == "/sell":
             order = Sell(**body)
         try:
-            fills = Book().match(order)
+            resp = Book().match(order)
             http_status_code = 201
-        except:
+        except Exception as e:
+            resp = {"message": e.message}
             http_status_code = 500
-        # TODO: Would prefer to handle the headers more cleverly like with
-        # a decorator.
-        self.set_header("content-type", "application/json")
         self.set_header("location", "{}://{}{}".format(self.request.protocol,
             self.request.host, self.reverse_url("book")))
         self.set_status(http_status_code)
-        self.write(json.dumps(fills))
+        self.write(resp)
 
 
 def stop():
