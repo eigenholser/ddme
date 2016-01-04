@@ -9,6 +9,7 @@ from tornado.options import define, options
 from  tornado.web import URLSpec
 
 from orders import Book, Buy, Sell
+import constants
 
 define("port", default=3000, help="run on the given port", type=int)
 Book()
@@ -30,18 +31,18 @@ class OrderHandler(tornado.web.RequestHandler):
     def post(self, **kwargs):
         order = None
         body = json.loads(self.request.body)
-        if self.request.uri == "/buy":
+        if self.request.uri == "{}".format(constants.URL_PATH_BUY):
             order = Buy(**body)
-        if self.request.uri == "/sell":
+        if self.request.uri == "{}".format(constants.URL_PATH_SELL):
             order = Sell(**body)
         try:
             resp = Book().match(order)
-            http_status_code = 201
+            http_status_code = constants.HTTP_201_CREATED
         except Exception as e:
             resp = {"message": e.message}
-            http_status_code = 500
+            http_status_code = constants.HTTP_500_INTERNAL_SERVER_ERROR
         self.set_header("location", "{}://{}{}".format(self.request.protocol,
-            self.request.host, self.reverse_url("book")))
+            self.request.host, self.reverse_url("{}".format(constants.URL_NAME_BOOK))))
         self.set_status(http_status_code)
         self.write(resp)
 
@@ -61,9 +62,21 @@ def sigint_handler(signum, frame):
 def main():
     tornado.options.parse_command_line()
     application = tornado.web.Application([
-        URLSpec(r"/book", BookHandler, name="book"),
-        URLSpec(r"/buy", OrderHandler, name="buy"),
-        URLSpec(r"/sell", OrderHandler, name="sell"),
+        URLSpec(
+            r"{}".format(constants.URL_PATH_BOOK),
+            BookHandler,
+            name="{}".format(constants.URL_NAME_BOOK)
+        ),
+        URLSpec(
+            r"{}".format(constants.URL_PATH_BUY),
+            OrderHandler,
+            name="{}".format(constants.URL_NAME_BUY)
+        ),
+        URLSpec(
+            r"{}".format(constants.URL_PATH_SELL),
+            OrderHandler,
+            name="{}".format(constants.URL_NAME_SELL)
+        ),
     ])
     http_server = HTTPServer(application)
     http_server.listen(options.port)
