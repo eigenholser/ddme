@@ -64,6 +64,7 @@ Notes
 * REST API implemented as specified. Normal pattern would have ``/buys`` and
   ``/sells`` representing collections when called with ``GET``. ``POST`` to
   the collections would create the object with response including a
-  ``Location:`` HTTP header. Though I can see that in this implementation how
-  that would complicate the matching engine.
+  ``Location`` HTTP header. Though I can see that in this implementation how
+  that would complicate the matching engine. As a compromise, I added a
+  ``Location`` header for the ``/book`` API endpoint.
 
