@@ -61,6 +61,7 @@ class Book(Singleton):
                     # entry. stop.
                     if order.qty == entry.qty:
                         fills.append(order.dict())
+                        order.complete()
                         del side[index]
                         break
                     # order.qty < entry.qty : order complete fill. update
