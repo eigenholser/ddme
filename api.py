@@ -1,5 +1,6 @@
 import json
 from tornado.httpserver import HTTPServer
+from tornado.httputil import HTTPHeaders
 from  tornado.web import URLSpec
 import tornado.ioloop
 import tornado.web
@@ -28,6 +29,9 @@ class OrderHandler(tornado.web.RequestHandler):
         if self.request.uri == "/sell":
             order = Sell(**body)
         fills = Book().match(order)
+        self.set_header("content-type", "application/json")
+        self.set_header("location", "{}://{}{}".format(self.request.protocol,
+            self.request.host, self.reverse_url("book")))
         self.write(json.dumps(fills))
 
 
