@@ -11,6 +11,11 @@ from  tornado.web import URLSpec
 from orders import Book, Buy, Sell
 import constants
 
+try:
+    from httplib import responses
+except ImportError:
+    from http.client import responses
+
 define("port", default=3000, help="run on the given port", type=int)
 
 
@@ -36,7 +41,7 @@ class OrderHandler(tornado.web.RequestHandler):
         if self.request.uri == "{}".format(constants.URL_PATH_SELL):
             order = Sell(**body)
         if not order.is_valid():
-            resp = {"message": "Invalid request"}
+            resp = {"message": responses[constants.HTTP_400_BAD_REQUEST]}
             self.set_status(constants.HTTP_400_BAD_REQUEST)
             self.write(resp)
             return
