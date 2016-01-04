@@ -13,14 +13,19 @@ Book()
 
 
 class BookHandler(tornado.web.RequestHandler):
-
+    """
+    Handle GET requests to /book API endpoint.
+    """
     def get(self):
+        self.set_header("content-type", "application/json")
         ret = json.dumps(Book().orders())
         self.write(ret)
 
 
 class OrderHandler(tornado.web.RequestHandler):
-
+    """
+    Handle POST requests to /buy and /sell API endpoints.
+    """
     def post(self, **kwargs):
         order = None
         body = json.loads(self.request.body)
@@ -29,6 +34,8 @@ class OrderHandler(tornado.web.RequestHandler):
         if self.request.uri == "/sell":
             order = Sell(**body)
         fills = Book().match(order)
+        # TODO: Would prefer to handle the headers more cleverly like with
+        # a decorator.
         self.set_header("content-type", "application/json")
         self.set_header("location", "{}://{}{}".format(self.request.protocol,
             self.request.host, self.reverse_url("book")))
