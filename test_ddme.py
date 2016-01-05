@@ -192,3 +192,4 @@ class TestOrderMethods(object):
         sell = Sell(qty=0, prc=1)
         flag = sell.is_valid()
         assert flag == False
+
