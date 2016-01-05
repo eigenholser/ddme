@@ -97,6 +97,9 @@ class Book(Singleton):
         return {"fills": fills}
 
     def post(self, order):
+        """
+        Post the order to appropriate side of order book in sorted order.
+        """
         side = None
         if isinstance(order, Buy):
             side = self.buys
@@ -114,6 +117,9 @@ class Book(Singleton):
         side.insert(index, order)
 
     def orders(self):
+        """
+        Returns a dict containing entire order book.
+        """
         return {
             "buys": [buy.dict() for buy in self.buys],
             "sells": [sell.dict() for sell in self.sells],
