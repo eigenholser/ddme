@@ -34,14 +34,14 @@ Or, if you want to run it on a different port::
 
 Hit ``ctrl-c`` to cleanly exit the server.
 
-The validation tests are in the file ``test.sh``. The ``curl`` commands default
+The validation tests are in the file ``validate.sh``. The ``curl`` commands default
 to port 3000. To validate, just invoke it on the command line::
 
-    $ ./test.sh
+    $ ./validate.sh
 
 Or if you've run the server on a different port::
 
-    $ ./test.sh 4321
+    $ ./validate.sh 4321
 
 ----------
 Unit Tests
