@@ -9,6 +9,9 @@ sys.path.insert(0, app_path + '/../')
 from orders import Book, Buy, Sell
 
 class TestBook(object):
+    """
+    Test matching and order posting object.
+    """
 
     def test_book_instance(self):
         """
@@ -150,6 +153,9 @@ class TestBook(object):
 
 
 class TestOrderMethods(object):
+    """
+    Test __sub__() magic method on Order object.
+    """
 
     def test_order_sub(self):
         """
@@ -170,3 +176,4 @@ class TestOrderMethods(object):
         with pytest.raises(Exception) as excinfo:
             diff = sell - buy
         assert excinfo.value[0] == "Short of shares to fill."
+
