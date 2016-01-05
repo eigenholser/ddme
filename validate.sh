@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+# Simple validation script to be run against server. curl commands call the
+# API.
+#
 
 port=$1
 if [ -z $port ]; then
