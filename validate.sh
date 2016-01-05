@@ -5,8 +5,9 @@ if [ -z $port ]; then
     port=3000
 fi
 
-if [ ! -z $2 ]; then
-    verbose="-v"
+verbose="-v"
+if [ -z $2 ]; then
+    verbose=""
 fi
 
 echo "***"
