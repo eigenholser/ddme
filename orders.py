@@ -111,8 +111,7 @@ class Book(Singleton):
             if self._post(order, entry):
                 index += 1
                 continue
-            else:
-                break
+            break
 
         side.insert(index, order)
 
