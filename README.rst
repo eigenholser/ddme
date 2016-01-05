@@ -50,7 +50,7 @@ Unit Tests
 There are unit tests implemented with PyTest. Code coverage will be generated
 using Coverage. Run the tests like this::
 
-    $ pytest_with_coverage.sh
+    $ ./pytest_with_coverage.sh
 
 This will generate a code coverage report in the ``htmlcov/`` directory.
 
