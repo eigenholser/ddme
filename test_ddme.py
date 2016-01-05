@@ -154,7 +154,7 @@ class TestBook(object):
 
 class TestOrderMethods(object):
     """
-    Test __sub__() magic method on Order object.
+    Test methods on Order object.
     """
 
     def test_order_sub(self):
@@ -177,3 +177,18 @@ class TestOrderMethods(object):
             diff = sell - buy
         assert excinfo.value[0] == "Short of shares to fill."
 
+    def test_is_valid_with_valid_order(self):
+        """
+        Test is_valid method with valid order object.
+        """
+        buy = Buy(qty=1, prc=1)
+        flag = buy.is_valid()
+        assert flag == True
+
+    def test_is_valid_with_not_valid_order(self):
+        """
+        Test is_valid method with not valid order object.
+        """
+        sell = Sell(qty=0, prc=1)
+        flag = sell.is_valid()
+        assert flag == False
