@@ -11,7 +11,7 @@ Installation
 
 Clone the ``git`` repository::
 
-    $ git clone git@github.com:eigenholser/ddme.git
+    $ git clone https://github.com/eigenholser/ddme.git
 
 You will need ``curl`` and ``json_reformat``. On Ubuntu do this::
 
