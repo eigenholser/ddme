@@ -95,7 +95,7 @@ class Book(Singleton):
         if order.qty > 0:
             self.post(order)
 
-        return {"fills": [fill for fill in fills]}
+        return {"fills": fills}
 
     def post(self, order):
         """
