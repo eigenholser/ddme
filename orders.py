@@ -37,9 +37,9 @@ class Book(Singleton):
         Conditional boolean value depending on which side of order book.
         """
         if isinstance(order, Buy):
-            return order >= entry
+            return order.prc >= entry.prc
         if isinstance(order, Sell):
-            return order <= entry
+            return order.prc <= entry.prc
 
     def _post(self, order, entry):
         """
@@ -72,9 +72,9 @@ class Book(Singleton):
                         break
                     # order.qty < entry.qty : order complete fill. update
                     # entry qty. zero order qty.
-                    if remainder['qty'] > 0:
-                        #entry.qty = entry.qty - order.qty
-                        entry.update(**remainder)
+                    if remainder.qty > 0:
+                        # entry.qty = entry.qty - order.qty
+                        entry.update(remainder)
                         fills.append(order.dict())
                         order.complete()
                 except:
@@ -84,7 +84,7 @@ class Book(Singleton):
                     # No danger of exception on next line since the exception
                     # that landed us here has demonstrated that order - entry
                     # is safe.
-                    order.update(**(order - entry))
+                    order.update(order - entry)
                     fills.append(entry.dict())
                     del side[index]
             else:
@@ -94,7 +94,8 @@ class Book(Singleton):
 
         if order.qty > 0:
             self.post(order)
-        return {"fills": fills}
+
+        return {"fills": [fill for fill in fills]}
 
     def post(self, order):
         """
@@ -136,13 +137,13 @@ class Order(object):
 
     def __sub__(self, other):
         if self.qty >= other.qty:
+            cls = Sell
+            if isinstance(self, Buy):
+                cls = Buy
             ret = {"qty": self.qty - other.qty, "prc": self.prc}
-            return ret
+            return cls(**ret)
         else:
             raise Exception("Short of shares to fill.")
-
-    def __ge__(self, other): # pragma: no cover
-        return self.prc >= other.prc
 
     def __str__(self): # pragma: no cover
         ret = {"qty": self.qty, "prc": self.prc}
@@ -160,8 +161,8 @@ class Order(object):
     def complete(self): # pragma: no cover
         self.qty = 0
 
-    def update(self, **remainder): # pragma: no cover
-        self.qty = remainder['qty']
+    def update(self, remainder): # pragma: no cover
+        self.qty = remainder.qty
 
     def is_valid(self):
         """

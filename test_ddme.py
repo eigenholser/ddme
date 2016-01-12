@@ -164,8 +164,9 @@ class TestOrderMethods(object):
         buy = Buy(qty=1, prc=1)
         sell = Sell(qty=2, prc=1)
         diff = sell - buy
-        expected = {"qty": 1, "prc": 1}
-        assert diff == expected
+        expected = Sell(**{"qty": 1, "prc": 1})
+        assert diff.qty == expected.qty
+        assert diff.prc == expected.prc
 
     def test_order_sub_short(self):
         """
